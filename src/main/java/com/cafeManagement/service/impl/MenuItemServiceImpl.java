@@ -6,6 +6,9 @@ import com.cafeManagement.repository.MenuItemRepository;
 import com.cafeManagement.service.MenuItemService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class MenuItemServiceImpl implements MenuItemService {
@@ -39,6 +42,17 @@ public class MenuItemServiceImpl implements MenuItemService {
         resultDto.setPrice(savedMenuItem.getPrice());
 
         return resultDto;
+
+    }
+
+    @Override
+    public List<MenuItemDto> getAllMenuItems() {
+        // Fetch all menu items from DB
+
+        return menuItemRepository.findAll()
+                .stream()
+                .map(item -> new MenuItemDto(item.getId(), item.getName(), item.getPrice()))
+                .collect(Collectors.toList());
 
     }
 }

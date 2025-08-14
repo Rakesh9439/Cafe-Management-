@@ -1,5 +1,6 @@
 package com.cafeManagement.controller;
 
+import com.cafeManagement.dto.APIResponse;
 import com.cafeManagement.dto.MenuItemDto;
 import com.cafeManagement.service.MenuItemService;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,9 @@ public class MenuItemController {
 
     // Add Menu Item
     @PostMapping("/addItems")
-    public ResponseEntity<MenuItemDto> addMenuItem(@RequestBody MenuItemDto menuItemDto) {
-        MenuItemDto savedItem = menuItemService.addMenuItem(menuItemDto);
-        return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
+    public ResponseEntity<APIResponse<String>> addMenuItem(@RequestBody MenuItemDto menuItemDto) {
+        APIResponse<String> response = menuItemService.addMenuItem(menuItemDto);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
     }
 
 

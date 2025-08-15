@@ -15,6 +15,18 @@ import lombok.Setter;
 public class MenuItemDto {
 
 
+
+    // ✅ No-args constructor (needed by Jackson)
+    public MenuItemDto() {}
+
+    // ✅ All-args constructor
+    public MenuItemDto(Long id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+
     private Long id;
 
     private String name;

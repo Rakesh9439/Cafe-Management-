@@ -1,13 +1,13 @@
 package com.cafeManagement.controller;
 
+import com.cafeManagement.dto.APIResponse;
 import com.cafeManagement.dto.MenuItemDto;
 import com.cafeManagement.service.MenuItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/menu-items")
@@ -22,8 +22,17 @@ public class MenuItemController {
 
     // Add Menu Item
     @PostMapping("/addItems")
-    public ResponseEntity<MenuItemDto> addMenuItem(@RequestBody MenuItemDto menuItemDto) {
-        MenuItemDto savedItem = menuItemService.addMenuItem(menuItemDto);
-        return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
+    public ResponseEntity<APIResponse<String>> addMenuItem(@RequestBody MenuItemDto menuItemDto) {
+        APIResponse<String> response = menuItemService.addMenuItem(menuItemDto);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+    }
+
+
+
+    // ✅ Get all menu items
+    @GetMapping("/getAll")
+    public ResponseEntity<List<MenuItemDto>> getAllMenuItems() {
+        List<MenuItemDto> items = menuItemService.getAllMenuItems();
+        return ResponseEntity.ok(items);
     }
 }
